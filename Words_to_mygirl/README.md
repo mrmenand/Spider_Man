@@ -5,7 +5,7 @@
 ## 每日情话
 >  爬虫还是非常有用的，毕竟可以说骚话，但我是个菜鸡呀 
 ### Acknowledgement
-[每天不同时间段通过微信发消息提醒女友每天不同时间段通过微信发消息提醒女友](https://github.com/shengqiangzhang/examples-of-web-crawlers/tree/master/4.%E6%AF%8F%E5%A4%A9%E4%B8%8D%E5%90%8C%E6%97%B6%E9%97%B4%E6%AE%B5%E9%80%9A%E8%BF%87%E5%BE%AE%E4%BF%A1%E5%8F%91%E6%B6%88%E6%81%AF%E6%8F%90%E9%86%92%E5%A5%B3%E5%8F%8B) 
+[每天不同时间段通过微信发消息提醒女友每天不同时间段通过微信发消息提醒女友](https://github.com/shengqiangzhang/examples-of-web-crawlers/tree/master/4.%E6%AF%8F%E5%A4%A9%E4%B8%8D%E5%90%8C%E6%97%B6%E9%97%B4%E6%AE%B5%E9%80%9A%E8%BF%87%E5%BE%AE%E4%BF%A1%E5%8F%91%E6%B6%88%E6%81%AF%E6%8F%90%E9%86%92%E5%A5%B3%E5%8F%8B)    
 [用 Python + itchat 写一个爬虫脚本每天定时给多个女友发给微信暖心话](https://github.com/sfyc23/EverydayWechat) 
 
 
@@ -24,9 +24,9 @@
 
 ### Ubuntun服务器部署
 后台启动Python脚本，并把日志写入test.out，会返回一个pid   
-`nohup python3 -u words_to_mygirl.py > test.out 2>&1 &`  
+`nohup python3 -u words_to_mygirl.py > test.out 2>&1 &`   
 查询正在使用Python相关进程pid值   
-`ps -ef | grep python3`
+`ps -ef | grep python3`  
 杀掉进程  
 `kill -9 pid`
 
