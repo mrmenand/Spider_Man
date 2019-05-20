@@ -7,6 +7,7 @@
 ### Acknowledgement
 [每天不同时间段通过微信发消息提醒女友每天不同时间段通过微信发消息提醒女友](https://github.com/shengqiangzhang/examples-of-web-crawlers/tree/master/4.%E6%AF%8F%E5%A4%A9%E4%B8%8D%E5%90%8C%E6%97%B6%E9%97%B4%E6%AE%B5%E9%80%9A%E8%BF%87%E5%BE%AE%E4%BF%A1%E5%8F%91%E6%B6%88%E6%81%AF%E6%8F%90%E9%86%92%E5%A5%B3%E5%8F%8B)    
 [用 Python + itchat 写一个爬虫脚本每天定时给多个女友发给微信暖心话](https://github.com/sfyc23/EverydayWechat) 
+[wxpy文档](https://wxpy.readthedocs.io/zh/latest/bot.html)
 
 
 ### 首先，祝每个程序员能有个女朋友
@@ -16,6 +17,7 @@
 -  词霸每日一句
 -  播报小天使
 -  One一个每日一句
+-  [每日壁纸](https://unsplash.com/)
 
 ### 然后只要胆子够大,你可以有几个女朋友
 -  只要你车开的够快，你朋友的???就跟不上你！[你好污呀](https://www.nihaowua.com/)，~~已删除~~

@@ -73,10 +73,27 @@ def send_message(your_message):
 
         # 发送消息给对方
         my_friend.send(your_message)
+
+
     except:
 
         # 出问题时，发送信息到文件传输助手
         bot.file_helper.send(u"守护女友出问题了，赶紧去看看咋回事~")
+
+# 发送图片给她
+def send_img():
+    url = "https://source.unsplash.com/random/4096x2160"
+    r = requests.get(url)
+    # with open("./image/{}.jpg".format(time.ctime()), "wb") as f:
+    #     img_path = "./image/" + time.ctime() + ".jpg"
+    #     f.write(r.content)
+    with open("toyugg.jpg","wb") as f:
+        f.write(r.content)
+
+    path = "./toyugg.jpg"
+
+    my_friend = bot.friends().search(my_lady_wechat_name)[0]
+    my_friend.send_image(path)
 
 
 
@@ -105,6 +122,7 @@ def start_care():
                 message = message + choice(str_list_emoj)
 
             send_message(message)
+            send_img()
             print("提醒女友早上起床:%s" % time.ctime())
 
         elif (now_time == say_weather):
@@ -123,6 +141,7 @@ def start_care():
                 message = message + choice(str_list_emoj)+"\n" + "ONE一个:" + word.get_dictum_info()
 
             send_message(message)
+            send_img()
             print("提醒女友中午吃饭:%s" % time.ctime())
 
         elif (now_time == say_good_dinner):
@@ -133,6 +152,7 @@ def start_care():
                 message = message + choice(str_list_emoj)
 
             send_message(message)
+            send_img()
             print("提醒女友晚上吃饭:%s" % time.ctime())
 
         elif (now_time == say_good_dream):
@@ -149,6 +169,7 @@ def start_care():
                 message = message + choice(str_list_emoj)
 
             send_message(message)
+            send_img()
             print("提醒女友晚上睡觉:%s" % time.ctime())
 
         # 节日问候语
