@@ -2,18 +2,17 @@
 from __future__ import unicode_literals
 
 import datetime
+import re
 import requests
 from bs4 import BeautifulSoup
 from wxpy import *
 from requests import get
 from requests import post
 from platform import system
-from os import chdir
 from random import choice
 from threading import Thread
 import configparser
 import time
-import sys
 import json
 import urllib
 from bs4 import BeautifulSoup
@@ -63,6 +62,44 @@ class Words():
         note = r.json()['note']
         content = r.json()['content']
         return note, content
+    ## 污话
+    def get_train_word(self):
+        url = "https://www.nihaowua.com/"
+        r = requests.get(url)
+        pattern = re.compile("<section>.*</section>", re.S)
+        section = re.findall(pattern, r.text)
+        train_words = section[0].split(">")[3].split("<")[0]
+        # print(train_words)
+        return train_words
+
+    def get_all_song(self):
+        ### 评论过十万的华语单曲（不定期更新）
+        url = "https://music.163.com/playlist?id=2193426092"
+        r = requests.get(url)
+        pattern = r'<ul class="f-hide"><li><a href="/song\?id=\d*?">.*</a></li></ul>'
+        song = re.findall(pattern, r.text)
+        # print(song)
+        pattern_name = r'<li><a href="/song\?id=\d*?">(.*?)</a></li>'
+        pattern_id = r'<li><a href="/song\?id=(\d*?)">.*?</a></li>'
+        song_name = re.findall(pattern_name, song[0])
+        song_id = re.findall(pattern_id, song[0])
+        # print(song_name)
+        # print(song_id)
+        return song_name, song_id
+
+    def get_music_msg(self,song_name, song_id):
+        url = 'http://music.163.com/weapi/v1/resource/comments/R_SO_4_' + song_id + '?csrf_token='  # 歌评url
+        data = {
+            "params": "w7dsLfmFlYLbnkeu/5uwDQiRNdohVjDmCgUiLce56Wp41EUbnybKG3mQo2gz56Kly4x3gb8W+kbfWcWndnzXPfikLrgpQ83KbeMzxje0MihelK5IHhfOG+lg+ZvY068+bg9Vn8/M97KFoSwhF1k5BWwVkcxB99pqB7aJ1DO6bxjjClpc4mfTQyI6bSiugIV9Xr5NCsAdXO/iWbafxua1XTtbQSST81hWksznBq6bKwY=",
+            "encSecKey": "c972a5e9546868e97d430e494e2358e3b2bf59eb78210765a1913201dfa1fd5b0c406d3fc33c738e9a3de018691f47c18acac283604e6d850ef5fb2a686fac6513b964db14e5caf79cf95686646c691b7bcebe059c7624e19694db35baa6ef6e775979cf471fe211747264ab60db004207eb11c8cb1ffb5429650f8e97007239"}
+
+        r = requests.post(url, data=data)
+        hot_commit = r.json()["hotComments"]
+        music_msg = "小宝贝，今天的工作也辛苦啦~~听首歌，放松一下吧\n" + "https://music.163.com/#/song?id=" + song_id + "  《" + song_name + "》\n" + "精彩评论：" + \
+                    hot_commit[0]["content"] + "\n" \
+                    + hot_commit[1]["content"] + "\n"
+
+        return music_msg
 
 
 # 发送消息给她
@@ -70,19 +107,15 @@ def send_message(your_message):
     try:
         # 对方的微信名称
         my_friend = bot.friends().search(my_lady_wechat_name)[0]
-
         # 发送消息给对方
         my_friend.send(your_message)
-
-
     except:
-
         # 出问题时，发送信息到文件传输助手
         bot.file_helper.send(u"守护女友出问题了，赶紧去看看咋回事~")
 
 # 发送图片给她
 def send_img():
-    url = "https://source.unsplash.com/random/4096x2160"
+    url = "https://source.unsplash.com/random/1280x720"
     r = requests.get(url)
     # with open("./image/{}.jpg".format(time.ctime()), "wb") as f:
     #     img_path = "./image/" + time.ctime() + ".jpg"
@@ -103,13 +136,12 @@ def start_care():
     # 待发送的内容，先置为空
     message = ""
     word = Words()
-
+    song_name, song_id = word.get_all_song()
+    i = (datetime.today() - datetime(2019, 5, 21)).days
     # 来个死循环，24小时关心她
     while (True):
-
         # 提示
         print("守护中，时间:%s" % time.ctime())
-
         # 每天定时问候，早上起床，中午吃饭，晚上吃饭，晚上睡觉
         # 获取时间，只获取时和分，对应的位置为倒数第13位到倒数第8位
         now_time = time.ctime()[-13:-8]
@@ -154,6 +186,11 @@ def start_care():
             send_message(message)
             send_img()
             print("提醒女友晚上吃饭:%s" % time.ctime())
+        elif (now_time == say_music):
+            if i < len(song_id):
+                music_msg = word.get_music_msg(song_name[i], song_id[i])
+            send_message(music_msg)
+
 
         elif (now_time == say_good_dream):
 
@@ -237,6 +274,7 @@ if __name__ == "__main__":
     say_good_lunch = cf.get("configuration", "say_good_lunch")
     say_good_dinner = cf.get("configuration", "say_good_dinner")
     say_good_dream = cf.get("configuration", "say_good_dream")
+    say_music =cf.get("configuration","say_music")
 
     # 设置女友生日信息
     # 几月，注意补全数字，为两位数，比如6月必须写成06
