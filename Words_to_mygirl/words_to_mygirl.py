@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
 
-import datetime
 import re
 import requests
-from bs4 import BeautifulSoup
+from  datetime import datetime
 from wxpy import *
 from requests import get
 from requests import post
@@ -13,8 +12,6 @@ from random import choice
 from threading import Thread
 import configparser
 import time
-import json
-import urllib
 from bs4 import BeautifulSoup
 
 
@@ -25,9 +22,11 @@ class Words():
 
     def get_weather_info(self, city_code='101250101'):
         url = "http://t.weather.sojson.com/api/weather/city/" + city_code
-        content = urllib.request.urlopen(url).read().decode("utf-8")
-        all_data = json.loads(content)
-        # print(all_data)
+        # content = urllib.request.urlopen(url).read().decode("utf-8")
+        # all_data = json.loads(content)
+        all_data = requests.get(url).json()
+
+        print(all_data)
 
         data = all_data['data']
         forecast = data["forecast"][0]
@@ -96,8 +95,8 @@ class Words():
         r = requests.post(url, data=data)
         hot_commit = r.json()["hotComments"]
         music_msg = "小宝贝，今天的工作也辛苦啦~~听首歌，放松一下吧\n" + "https://music.163.com/#/song?id=" + song_id + "  《" + song_name + "》\n" + "精彩评论：" + \
-                    hot_commit[0]["content"] + "\n" \
-                    + hot_commit[1]["content"] + "\n"
+                    hot_commit[1]["content"] + "\n" \
+                    + hot_commit[2]["content"] + "\n"
 
         return music_msg
 
@@ -137,7 +136,6 @@ def start_care():
     message = ""
     word = Words()
     song_name, song_id = word.get_all_song()
-    i = (datetime.today() - datetime(2019, 5, 21)).days
     # 来个死循环，24小时关心她
     while (True):
         # 提示
@@ -187,8 +185,11 @@ def start_care():
             send_img()
             print("提醒女友晚上吃饭:%s" % time.ctime())
         elif (now_time == say_music):
+            i = (datetime.today() - datetime(2019, 5, 21)).days
             if i < len(song_id):
                 music_msg = word.get_music_msg(song_name[i], song_id[i])
+
+            print(music_msg)
             send_message(music_msg)
 
 
@@ -288,25 +289,25 @@ if __name__ == "__main__":
     str_list_good_morning = ''
     with open("./remind_sentence/sentence_good_morning.txt", "r", encoding='UTF-8') as f:
         str_list_good_morning = f.readlines()
-    print(str_list_good_morning)
+    # print(str_list_good_morning)
 
     # 中午吃饭问候语列表，数据来源于新浪微博
     str_list_good_lunch = ''
     with open("./remind_sentence/sentence_good_lunch.txt", "r", encoding='UTF-8') as f:
         str_list_good_lunch = f.readlines()
-    print(str_list_good_lunch)
+    # print(str_list_good_lunch)
 
     # 晚上吃饭问候语列表，数据来源于新浪微博
     str_list_good_dinner = ''
     with open("./remind_sentence/sentence_good_dinner.txt", "r", encoding='UTF-8') as f:
         str_list_good_dinner = f.readlines()
-    print(str_list_good_dinner)
+    # print(str_list_good_dinner)
 
     # 晚上睡觉问候语列表，数据来源于新浪微博
     str_list_good_dream = ''
     with open("./remind_sentence/sentence_good_dream.txt", "r", encoding='UTF-8') as f:
         str_list_good_dream = f.readlines()
-    print(str_list_good_dream)
+    # print(str_list_good_dream)
 
     # 设置晚上睡觉问候语是否在原来的基础上再加上每日学英语精句
     # False表示否 True表示是
@@ -315,7 +316,7 @@ if __name__ == "__main__":
         flag_learn_english = True
     else:
         flag_learn_english = False
-    print(flag_learn_english)
+    # print(flag_learn_english)
 
     # 设置所有问候语结束是否加上表情符号
     # False表示否 True表示是
@@ -325,28 +326,28 @@ if __name__ == "__main__":
         flag_wx_emoj = True
     else:
         flag_wx_emoj = False
-    print(str_list_emoj)
+    # print(str_list_emoj)
 
     # 设置节日祝福语
     # 情人节祝福语
     str_Valentine = cf.get("configuration", "str_Valentine")
-    print(str_Valentine)
+    # print(str_Valentine)
 
     # 三八妇女节祝福语
     str_Women = cf.get("configuration", "str_Women")
-    print(str_Women)
+    # print(str_Women)
 
     # 平安夜祝福语
     str_Christmas_Eve = cf.get("configuration", "str_Christmas_Eve")
-    print(str_Christmas_Eve)
-
+    # print(str_Christmas_Eve)
+    #
     # 圣诞节祝福语
     str_Christmas = cf.get("configuration", "str_Christmas")
-    print(str_Christmas)
+    # print(str_Christmas)
 
     # 她生日的时候的祝福语
     str_birthday = cf.get("configuration", "str_birthday")
-    print(str_birthday)
+    # print(str_birthday)
 
     # 开始守护女友
     t = Thread(target=start_care, name='start_care')
