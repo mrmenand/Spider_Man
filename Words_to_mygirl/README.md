@@ -1,5 +1,7 @@
-<p align="left"><img width="256px" src="./remind_sentence/red.jpg></p>
-<p align="center"><img width="256px" src="./remind_sentence/pupple.jpg></p>
+<p align="left"><img width="256px" src="./remind_sentence/red.jpg></p> 
+  
+<p align="center"><img width="256px" src="./remind_sentence/pupple.jpg></p> 
+  
 <p align="right"><img width="256px" src="./remind_sentence/blue.jpg></p>   
 
 
