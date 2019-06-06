@@ -1,3 +1,7 @@
+<p align="left"><img width="256px" src="./remind_sentence/red.jpg></p>
+<p align="center"><img width="256px" src="./remind_sentence/pupple.jpg></p>
+<p align="right"><img width="256px" src="./remind_sentence/blue.jpg></p> 
+
 [![Author](https://img.shields.io/badge/Author-mr__menand-yellowgreen.svg)](https://mrmenand.github.io/)
 [![情话](https://img.shields.io/badge/%E7%8C%BF%E6%B0%8F%E6%B5%AA%E6%BC%AB-%E6%83%85%E8%AF%9D-green.svg)]()
 [![一个](https://img.shields.io/badge/One-%E4%B8%80%E4%B8%AA-yellow.svg)](http://wufazhuce.com/)
