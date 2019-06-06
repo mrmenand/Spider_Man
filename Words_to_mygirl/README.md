@@ -1,8 +1,17 @@
-<figure class="third">
+
+<table>
+    <tr>
+        <td ><center><img src="./remind_sentence/red.jpg"> </center> </td>     
+        <td ><center><img src="./remind_sentence/pupple.jpg"> </center> </td>
+        <td ><center><img src="./remind_sentence/blue.jpg"> </center> </td>
+    </tr>
+</table>
+<!-- <p><figure class="third">
     <img src="./remind_sentence/red.jpg" width="300"/>
     <img src="./remind_sentence/pupple.jpg" width="300"/>
     <img src="./remind_sentence/blue.jpg" width="300"/>
 </figure>
+<p> -->
 
 [![Author](https://img.shields.io/badge/Author-mr__menand-yellowgreen.svg)](https://mrmenand.github.io/)
 [![情话](https://img.shields.io/badge/%E7%8C%BF%E6%B0%8F%E6%B5%AA%E6%BC%AB-%E6%83%85%E8%AF%9D-green.svg)]()
