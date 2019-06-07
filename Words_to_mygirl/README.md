@@ -1,3 +1,18 @@
+
+<table>
+    <tr>
+        <td ><center><img src="./remind_sentence/red.jpg"> </center> </td>     
+        <td ><center><img src="./remind_sentence/pupple.jpg"> </center> </td>
+        <td ><center><img src="./remind_sentence/blue.jpg"> </center> </td>
+    </tr>
+</table>
+<!-- <p><figure class="third">
+    <img src="./remind_sentence/red.jpg" width="300"/>
+    <img src="./remind_sentence/pupple.jpg" width="300"/>
+    <img src="./remind_sentence/blue.jpg" width="300"/>
+</figure>
+<p> -->
+
 [![Author](https://img.shields.io/badge/Author-mr__menand-yellowgreen.svg)](https://mrmenand.github.io/)
 [![情话](https://img.shields.io/badge/%E7%8C%BF%E6%B0%8F%E6%B5%AA%E6%BC%AB-%E6%83%85%E8%AF%9D-green.svg)]()
 [![一个](https://img.shields.io/badge/One-%E4%B8%80%E4%B8%AA-yellow.svg)](http://wufazhuce.com/)
@@ -15,7 +30,7 @@
 ### 首先，祝每个程序员能有个女朋友
 - 每天定时问候，早上起床，中午吃饭，晚上吃饭，晚上睡觉
 -  情感分析
--  节日问候
+-  节日问候 
 -  词霸每日一句
 -  播报小天使
 -  One一个每日一句
