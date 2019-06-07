@@ -8,7 +8,7 @@ from wxpy import *
 from requests import get
 from requests import post
 from platform import system
-from random import choice
+from random import choice, randint
 from threading import Thread
 import configparser
 import time
@@ -21,12 +21,14 @@ class Words():
     }
 
     def get_weather_info(self, city_code='101250101'):
-        url = "http://t.weather.sojson.com/api/weather/city/" + city_code
+        # url = "http://t.weather.sojson.com/api/weather/city/" + city_code
         # content = urllib.request.urlopen(url).read().decode("utf-8")
+        url = "http://t.weather.itboy.net/api/weather/city/" + city_code
+
         # all_data = json.loads(content)
         all_data = requests.get(url).json()
 
-        print(all_data)
+        # print(all_data)
 
         data = all_data['data']
         forecast = data["forecast"][0]
@@ -94,9 +96,10 @@ class Words():
 
         r = requests.post(url, data=data)
         hot_commit = r.json()["hotComments"]
-        music_msg = "小宝贝，今天的工作也辛苦啦~~听首歌，放松一下吧\n" + "https://music.163.com/#/song?id=" + song_id + "  《" + song_name + "》\n" + "精彩评论：" + \
-                    hot_commit[1]["content"] + "\n" \
-                    + hot_commit[2]["content"] + "\n"
+        music_msg = "小宝贝，今天的工作也辛苦啦~~听首歌，放松一下吧\n" + "https://music.163.com/#/song?id=" + song_id + "  《" + song_name + "》\n"
+        # + "精彩评论：" + \
+                    # hot_commit[1]["content"] + "\n" \
+                    # + hot_commit[2]["content"] + "\n"
 
         return music_msg
 
@@ -188,9 +191,11 @@ def start_care():
             i = (datetime.today() - datetime(2019, 5, 21)).days
             if i < len(song_id):
                 music_msg = word.get_music_msg(song_name[i], song_id[i])
+            if len(list_zhihu):
+                _,zhihu_word = list_zhihu.pop(randint(0,len(list_zhihu))).split(".")
 
-            print(music_msg)
-            send_message(music_msg)
+
+            send_message(music_msg+"\n"+zhihu_word)
 
 
         elif (now_time == say_good_dream):
@@ -198,7 +203,7 @@ def start_care():
             # 是否在结尾加上每日学英语
             if (flag_learn_english):
                 note, content = word.get_message()
-                message = choice(str_list_good_dream) + "\n\n" + "顺便一起来学英语哦：\n" + "原文: " + content + "\n\n翻译: " + note
+                message = choice(str_list_good_dream) + "\n\n" + "顺便一起来学英语哦：\n" + content
             else:
                 message = choice(str_list_good_dream)
 
@@ -210,30 +215,6 @@ def start_care():
             send_img()
             print("提醒女友晚上睡觉:%s" % time.ctime())
 
-        # 节日问候语
-        festival_month = time.strftime('%m', time.localtime())
-        festival_day = time.strftime('%d', time.localtime())
-
-        if (festival_month == '02' and festival_day == '14' and now_time == "08:00"):
-            send_message(str_Valentine)
-            print("发送情人节祝福:%s" % time.ctime())
-
-        elif (festival_month == '03' and festival_day == '08' and now_time == "08:00"):
-            send_message(str_Women)
-            print("发送三八妇女节祝福:%s" % time.ctime())
-
-        elif (festival_month == '12' and festival_day == '24' and now_time == "00:00"):
-            send_message(str_Christmas_Eve)
-            print("发送平安夜祝福:%s" % time.ctime())
-
-        elif (festival_month == '12' and festival_day == '25' and now_time == "00:00"):
-            send_message(str_Christmas)
-            print("发送圣诞节祝福:%s" % time.ctime())
-
-        # 生日问候语
-        if (festival_month == birthday_month and festival_day == birthday_day and now_time == "00:00"):
-            send_message(str_birthday)
-            print("发送生日祝福:%s" % time.ctime())
 
         # 每60秒检测一次
         time.sleep(60)
@@ -286,6 +267,10 @@ if __name__ == "__main__":
     # 读取早上起床时间，中午吃饭时间，下午吃饭时间，晚上睡觉时间的随机提示语
     # 一般这里的代码不要改动，需要增加提示语可以自己打开对应的文件修改
     # 早上起床问候语列表，数据来源于新浪微博
+    with open("./remind_sentence/zhihu","r",encoding="utf-8") as f:
+        list_zhihu = f.readlines()
+
+
     str_list_good_morning = ''
     with open("./remind_sentence/sentence_good_morning.txt", "r", encoding='UTF-8') as f:
         str_list_good_morning = f.readlines()
